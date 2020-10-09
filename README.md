@@ -24,4 +24,4 @@ This version of the Local Weather PWA project uses the OpenWeatherMap API data t
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-Made with :heart: in :zambia:
+Made with :heart: in :zambia: and the :us:
