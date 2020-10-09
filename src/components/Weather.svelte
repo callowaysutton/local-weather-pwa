@@ -8,7 +8,7 @@
 </style>
 
 <div class="uk-padding-remove">
-        {#if condition == "none"}
+        {#if condition == ""}
         <div class="icon {mini} sun-shower">
             <div class="cloud"></div>
             <div class="sun">
@@ -18,7 +18,17 @@
         </div>
         {/if}
 
-        {#if condition == "none"}
+        {#if condition == ""}
+        <div class="icon {mini} sun-shower">
+            <div class="cloud"></div>
+            <div class="sun">
+                <div class="rays"></div>
+            </div>
+            <div class="rain"></div>
+        </div>
+        {/if}
+
+        {#if condition == "11d"}
         <div class="icon {mini} thunder-storm">
             <div class="cloud"></div>
             <div class="lightning">
@@ -28,21 +38,45 @@
         </div>
         {/if}
 
-        {#if condition == "cloudy"}
+        {#if condition == "11n"}
+        <div class="icon {mini} thunder-storm">
+            <div class="cloud"></div>
+            <div class="lightning">
+                <div class="bolt"></div>
+                <div class="bolt"></div>
+            </div>
+        </div>
+        {/if}
+
+        {#if condition == "04d"}
         <div class="icon {mini} cloudy">
             <div class="cloud"></div>
             <div class="cloud"></div>
         </div>
         {/if}
 
-        {#if condition == "fog"}
+        {#if condition == "04n"}
+        <div class="icon {mini} cloudy">
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+        </div>
+        {/if}
+        
+        {#if condition == "03d"}
         <div class="icon {mini} cloudy">
             <div class="cloud"></div>
             <div class="cloud"></div>
         </div>
         {/if}
 
-        {#if condition == "snow"}
+        {#if condition == "50d"}
+        <div class="icon {mini} cloudy">
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+        </div>
+        {/if}
+
+        {#if condition == "13d"}
         <div class="icon {mini} flurries">
             <div class="cloud"></div>
             <div class="snow">
@@ -52,7 +86,7 @@
         </div>
         {/if}
 
-        {#if condition == "sleet"}
+        {#if condition == "13d"}
         <div class="icon {mini} flurries">
             <div class="cloud"></div>
             <div class="snow">
@@ -62,7 +96,7 @@
         </div>
         {/if}
 
-        {#if condition == "clear-day"}
+        {#if condition == "01d"}
         <div class="icon {mini} sunny">
             <div class="sun">
                 <div class="rays"></div>
@@ -70,20 +104,20 @@
         </div>
         {/if}
 
-        {#if condition == "clear-night"}
+        {#if condition == "01n"}
         <div class="icon {mini} night">
             <div class="moon"></div>
         </div>
         {/if}
 
-        {#if condition == "partly-cloudy-night"}
+        {#if condition == "02n"}
         <div class="icon {mini} partly-cloudy-night">
             <div class="moon"></div>
             <div class="cloud"></div>
         </div>
         {/if}
 
-        {#if condition == "partly-cloudy-day"}
+        {#if condition == "02d"}
         <div class="icon {mini} partly-cloudy-day">
             <div class="cloud"></div>
             <div class="sun">
@@ -92,7 +126,7 @@
         </div>
         {/if}
 
-        {#if condition == "rain"}
+        {#if condition == "10d"}
         <div class="icon {mini} rainy">
             <div class="cloud"></div>
             <div class="rain"></div>

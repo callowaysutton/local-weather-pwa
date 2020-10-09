@@ -9,7 +9,7 @@ import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 
 const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
+const dev = mode === 'production';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 export default {

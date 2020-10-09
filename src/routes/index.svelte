@@ -12,6 +12,7 @@
 	let days = Array();
 	let mini='mini';
 	let apiUri;
+	let unit = false;
 	export let currentCondition = "clear-day";
 
 	$: currentCondition;
@@ -21,25 +22,28 @@
 	
 	function getWeather(longitude, latitude) {
 		// WEATHER API GOES HERE
-		apiUri = `https://......./api/weather?longitude=${longitude}&latitude=${latitude}`
+		apiUri = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=3a00c8cd424b2827ca652c8c3d1eaa55`
+		console.log(apiUri)
 		fetch(apiUri)
 		  .then(r => r.json())
 		  .then(function(data){
 			  weather = data
-			  currentCondition = weather.currently.icon
+			  currentCondition = weather.current.weather[0].icon
+			  console.log(weather.current.temp.toFixed(0))
 			  getDays(weather.daily)
-			//   console.log(weather)
+			//	console.log(weather)
 			  toggleLoading()
 		  })
 	}
 
 	function getDays(daily) {
-		var data = daily.data.slice(0,5)
+		var data = daily.slice(0,5)
 
 		data.forEach(element => {
-			var a = new Date(element.time*1000)
+			var a = new Date(element.dt*1000)
 			var dayStrings = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 			days.push(dayStrings[a.getDay()])
+			console.log(daily[0].dt)
 		});
 	}
 
@@ -78,6 +82,14 @@
 		defaultLocation = !defaultLocation
 	}
 
+	function toC(t) {
+		return (t-273.15).toFixed(0)
+	}
+
+	function toF(t) {
+		return ((t - 273.15) * 9/5 + 32).toFixed(0)
+	}
+
 	onMount(getLocation);
 </script>
 
@@ -96,30 +108,44 @@
 
 			<div class="uk-container uk-container-xsmall">
 				<div class="uk-margin-small-top">
-					<h1 class="uk-text-center">Local Weather</h1>
+					<h1 class="uk-text-center">Weather</h1>
+					<label style="float: right;width: auto;"> <input type="checkbox" bind:checked={unit}> C </label>
+					<br />
 					<ul class="uk-flex-center" uk-tab>
-						<li class="uk-active"><a href="#">now</a></li>
-						<li><a href="#">forecast</a></li>
+						<li class="uk-active"><a href="#current">now</a></li>
+						<li><a href="#forecast">forecast</a></li>
 					</ul>
 					<ul class="uk-switcher uk-margin-small-top">
 						<li>
 							<div class="uk-grid-small uk-child-width-expand@s uk-text-center" uk-grid>
 								<div class="uk-margin-medium-top">
 									<Weather condition={currentCondition} />
-									<div class="uk-text-lead">{weather.currently.summary}</div>
-									<!-- <div>{weather.daily.summary}</div> -->
+									<div class="uk-text-lead">{weather.current.weather[0].main}</div>
+									<div></div>
 									<div class="uk-text-meta">Time Zone: {weather.timezone}</div>
-									<div class="uk-heading-xlarge  uk-margin-remove-bottom">{weather.currently.temperature.toFixed(0)}&#8451;</div>
+									{#if unit}
+									<div class="uk-heading-xlarge  uk-margin-remove-bottom">{toC(weather.current.temp)}&#8451;</div>
+									{:else}
+									<div class="uk-heading-xlarge  uk-margin-remove-bottom">{toF(weather.current.temp)}&#8457;</div>
+									{/if}
 									<div class="uk-text-meta uk-text-uppercase">current temperature</div>
 								</div>
 							</div>
 							<div class="uk-grid-large uk-margin-small-top" uk-grid>
 								<div class="uk-width-1-2 uk-text-right">
-									<div class="uk-heading-small uk-margin-remove-bottom">{weather.daily.data[0].temperatureMin.toFixed(0)}&#8451;</div>
+									{#if unit}
+									<div class="uk-heading-small uk-margin-remove-bottom">{toC(weather.daily[0].temp.min)}&#8451;</div>
+									{:else}
+									<div class="uk-heading-small uk-margin-remove-bottom">{toF(weather.daily[0].temp.min)}&#8457;</div>
+									{/if}
 									<div class="uk-text-meta uk-padding uk-padding-remove-vertical uk-text-uppercase">low</div>
 								</div>
 								<div class="uk-width-1-2 uk-text-left">
-									<div class="uk-heading-small uk-margin-remove-bottom">{weather.daily.data[0].temperatureMax.toFixed(0)}&#8451;</div>
+									{#if unit}
+									<div class="uk-heading-small uk-margin-remove-bottom">{toC(weather.daily[0].temp.max)}&#8451;</div>
+									{:else}
+									<div class="uk-heading-small uk-margin-remove-bottom">{toF(weather.daily[0].temp.max)}&#8457;</div>
+									{/if}
 									<div class="uk-text-meta uk-padding uk-padding-remove-vertical uk-text-uppercase">high</div>
 								</div>
 							</div>                        
@@ -128,30 +154,38 @@
 						<li>
 							<div class="uk-grid-small  uk-child-width-1-1 uk-text-center slim" uk-grid>
 								<Weather condition={weather.daily.icon} />
-								<div class="uk-text-lead uk-padding-remove">{weather.daily.summary}</div>
+								<div class="uk-text-lead uk-padding-remove">Forecast</div>
 								<ul uk-accordion class="accordion uk-text-left">
 									
 								{#each days as dayOfWeek, i}
 									<li>
-										<a class="uk-accordion-title" href="#">
+										<a class="uk-accordion-title" href="#expand">
 										<div class="uk-grid-collapse" uk-grid>
 											<div class="uk-width-expand">
 												<div>{dayOfWeek}</div>
 											</div>
 											<div class="uk-width-1-5">
-												<div><Weather mini={mini} condition={weather.daily.data[i].icon} /></div>
+												<div><Weather mini={mini} condition={weather.daily[i].weather[0].icon} /></div>
 											</div>
 											<div class="uk-width-1-4">
-												<div>{weather.daily.data[i].temperatureMax.toFixed(0)}&#8451;</div>
+												{#if unit}
+												<div>{toC(weather.daily[i].temp.min)}&#8451;</div>
+												{:else}
+												<div>{toF(weather.daily[i].temp.min)}&#8457;</div>
+												{/if}
 											</div>
 											<div class="uk-width-1-5 text-deemphasize">
-												<div>{weather.daily.data[i].temperatureMin.toFixed(0)}&#8451;</div>
+												{#if unit}
+												<div>{toC(weather.daily[i].temp.max)}&#8451;</div>
+												{:else}
+												<div>{toF(weather.daily[i].temp.max)}&#8457;</div>
+												{/if}
 											</div>
 										</div>
 										</a>
 										<div class="uk-accordion-content uk-text-center">
 											<p>Expected conditions:
-											<br>{weather.daily.data[i].summary}</p>
+											<br>{weather.daily[i].weather[0].description}</p>
 										</div>
 									</li>
 								{/each}
