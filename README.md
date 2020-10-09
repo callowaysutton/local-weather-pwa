@@ -1,10 +1,11 @@
 # Local Weather
 
-A progressive web application that shows your current weather plus a five day forcast. This application depends on a backend that provides it with data from the [DarkSky API](https://darksky.net/dev).
+A progressive web application that shows your current weather plus a five day forcast. This application depends on a backend that provides it with data from the [OpenWeatherMap API](https://openweathermap.org/api).
 
+To run:
 ```bash
-yarn
-yarn run dev
+npm i
+npm run dev
 ```
 
 Open up [localhost:3000](http://localhost:3000) and start clicking around.
