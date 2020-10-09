@@ -16,16 +16,9 @@ Open up [localhost:3000](http://localhost:3000) and start clicking around.
 - [UI Kit](https://getuikit.com/docs/card) 
 - Modified [Animated Weather Icons](https://codepen.io/joshbader/pen/EjXgqr)  by [Joshua Bader](https://joshuabader.com/)
 
-## Demo
+## Modifications
 
-[weather.twmbx.now.sh](https://weather.twmbx.now.sh)
-
-## Screenshots
-
-![Current Weather](Screenshot_1.png)
-![Five Day Forecast](Screenshot_2.png)
-![PWA Add To Homescreen](Screenshot_3.png)
-
+This version of the Local Weather PWA project uses the OpenWeatherMap API data to gather information.
 
 ## License
 
