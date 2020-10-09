@@ -21,6 +21,10 @@ Open up [localhost:3000](http://localhost:3000) and start clicking around.
 
 This version of the Local Weather PWA project uses the OpenWeatherMap API data to gather information.
 
+## Demo
+You can just run the demo project on Repl
+[![Run on Repl.it](https://repl.it/badge/github/callowaysutton/local-weather-pwa)](https://repl.it/github/callowaysutton/local-weather-pwa)
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
