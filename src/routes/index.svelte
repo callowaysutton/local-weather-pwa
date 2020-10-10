@@ -37,7 +37,7 @@
 	}
 
 	function getDays(daily) {
-		var data = daily.slice(0,5)
+		var data = daily.slice(0,7)
 
 		data.forEach(element => {
 			var a = new Date(element.dt*1000)
@@ -110,7 +110,6 @@
 				<div class="uk-margin-small-top">
 					<h1 class="uk-text-center">Weather</h1>
 					<label style="float: right;width: auto;"> <input type="checkbox" bind:checked={unit}> C </label>
-					<br />
 					<ul class="uk-flex-center" uk-tab>
 						<li class="uk-active"><a href="#current">now</a></li>
 						<li><a href="#forecast">forecast</a></li>

@@ -1,0 +1,23 @@
+{
+  "bundler": "rollup",
+  "shimport": "2.0.4",
+  "assets": {
+    "main": "client.4bdb1b27.js"
+  },
+  "css": {
+    "main": [
+      "client-1890402d.css",
+      "client-3d80c039.css"
+    ]
+  },
+  "dependencies": {
+    "index.svelte": [
+      "index.5a7702c8.js",
+      "client.85f31928.js",
+      "index-1fa47456.css"
+    ]
+  },
+  "legacy_assets": {
+    "main": "client.c8826df9.js"
+  }
+}
