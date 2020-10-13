@@ -13,6 +13,7 @@
 	let mini='mini';
 	let apiUri;
 	let unit = false;
+	let apikey = "3a00c8cd424b2827ca652c8c3d1eaa55";
 	export let currentCondition = "clear-day";
 
 	$: currentCondition;
@@ -22,72 +23,69 @@
 	
 	function getWeather(longitude, latitude) {
 		// WEATHER API GOES HERE
-		apiUri = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=3a00c8cd424b2827ca652c8c3d1eaa55`
-		console.log(apiUri)
+		apiUri = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
 		fetch(apiUri)
 		  .then(r => r.json())
 		  .then(function(data){
-			  weather = data
-			  currentCondition = weather.current.weather[0].icon
-			  console.log(weather.current.temp.toFixed(0))
-			  getDays(weather.daily)
-			//	console.log(weather)
-			  toggleLoading()
+			  weather = data;
+			  currentCondition = weather.current.weather[0].icon;
+			  getDays(weather.daily);
+			  console.log("Got your weather data :D");
+			  toggleLoading();
 		  })
 	}
 
 	function getDays(daily) {
-		var data = daily.slice(0,5)
+		var data = daily.slice(0,5);
 
 		data.forEach(element => {
 			var a = new Date(element.dt*1000)
 			var dayStrings = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-			days.push(dayStrings[a.getDay()])
-			console.log(daily[0].dt)
+			days.push(dayStrings[a.getDay()]);
 		});
 	}
 
 	function getLocation() {
 		if (navigator.geolocation) {
-			dataLoading = true
-			locationSupported = true
-			navigator.geolocation.getCurrentPosition(setLocation, locationError)
+			dataLoading = true;
+			locationSupported = true;
+			navigator.geolocation.getCurrentPosition(setLocation, locationError);
 		} else {
-    		locationSupported = false
-			noLocation()
+    		locationSupported = false;
+			noLocation();
 		}
 	}
 	
 	function setLocation(position) {
-		longitude = position.coords.longitude
-		latitude = position.coords.latitude
-		getWeather(longitude, latitude)
+		longitude = position.coords.longitude;
+		latitude = position.coords.latitude;
+		getWeather(longitude, latitude);
 	}
 	
 	function locationError(err) {
-		noLocation()
+		noLocation();
 	}
 		
 	function noLocation() {
-		longitude = 28.283333
-		latitude = -15.416667
-		toggleLoading()
+		longitude = 28.283333;
+		latitude = -15.416667;
+		toggleLoading();
 	}
 
 	function toggleLoading() {
-		dataLoading = !dataLoading
+		dataLoading = !dataLoading;
 	}
 
 	function toggleDefault() {
-		defaultLocation = !defaultLocation
+		defaultLocation = !defaultLocation;
 	}
 
 	function toC(t) {
-		return (t-273.15).toFixed(0)
+		return (t-273.15).toFixed(0);
 	}
 
 	function toF(t) {
-		return ((t - 273.15) * 9/5 + 32).toFixed(0)
+		return ((t - 273.15) * 9/5 + 32).toFixed(0);
 	}
 
 	onMount(getLocation);
