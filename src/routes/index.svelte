@@ -20,7 +20,7 @@
 	$: weather;
 	$: dataLoading;
 	$: days;
-	
+
 	function getWeather(longitude, latitude) {
 		// WEATHER API GOES HERE
 		apiUri = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
@@ -55,17 +55,17 @@
 			noLocation();
 		}
 	}
-	
+
 	function setLocation(position) {
 		longitude = position.coords.longitude;
 		latitude = position.coords.latitude;
 		getWeather(longitude, latitude);
 	}
-	
+
 	function locationError(err) {
 		noLocation();
 	}
-		
+
 	function noLocation() {
 		longitude = 28.283333;
 		latitude = -15.416667;
@@ -80,6 +80,10 @@
 		defaultLocation = !defaultLocation;
 	}
 
+	function change() {
+		return unit = !unit
+	}
+
 	function toC(t) {
 		return (t-273.15).toFixed(0);
 	}
@@ -92,7 +96,7 @@
 </script>
 
 <svelte:head>
-	{#if weather != undefined}
+	{#if weather !== undefined}
 		<title>Weather | {weather.timezone}</title>
 	{:else}
 		<title>Weather</title>
@@ -102,13 +106,18 @@
 
 <main>
 	{#if !dataLoading}
-		{#if weather != undefined}
+		{#if weather !== undefined}
 
 			<div class="uk-container uk-container-xsmall">
 				<div class="uk-margin-small-top">
 					<h1 class="uk-text-center">Weather</h1>
-					<label style="float: right;width: auto;"> <input type="checkbox" bind:checked={unit}> C </label>
-					<br />
+					<div class="right">
+					{#if unit}
+						<a href="#change" on:click={change}> C </a>
+					{:else}
+						<a href="#change" on:click={change}> F </a>
+					{/if}
+					</div>
 					<ul class="uk-flex-center" uk-tab>
 						<li class="uk-active"><a href="#current">now</a></li>
 						<li><a href="#forecast">forecast</a></li>
@@ -215,5 +224,8 @@
 	}
 	.uk-accordion-content{
 		margin: 0 0 10px;
+	}
+	.right {
+		float: right;
 	}
 </style>
